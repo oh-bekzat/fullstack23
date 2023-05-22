@@ -46,10 +46,10 @@ const Content = (props) => {
   )
 }
 
-const Part = (content_props) => {
+const Part = (props) => {
   return (
     <div>
-      <p>{content_props.part.name} {content_props.part.exercises}</p>
+      <p>{props.part.name} {props.part.exercises}</p>
     </div>
   )
 }
