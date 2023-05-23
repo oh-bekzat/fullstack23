@@ -44,7 +44,6 @@ const Statistics = (props) => {
 }
 
 const App = () => {
-  // save clicks of each button to its own state
   const text1 = 'give feedback'
   const text2 = 'statistics'
   const [good, setGood] = useState(0)
