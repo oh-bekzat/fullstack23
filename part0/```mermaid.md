@@ -8,7 +8,7 @@ sequenceDiagram
     server-->>browser: Ordering GET request
     deactivate server
 
-    URL forwarding
+    Note right of browser: URL forwarding
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
@@ -25,14 +25,14 @@ sequenceDiagram
     server-->>browser: the JavaScript file
     deactivate server
 
-    JSON is requested by the JS file
+    Note right of browser: JSON is requested by the JS file
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
     server-->>browser: [{content: "fdghj", date: "2023-05-25T13:59:46.737Z"},…]
     deactivate server
 
-    New note has been added
+    Note right of browser: New note has been added
 
     Notes are rendered
 ```
