@@ -138,7 +138,7 @@ const App = () => {
             setNotification('Notification bar')
           }, 3000)
         })
-        .catch(error => {
+        .catch(() => {
           setNotification(`${props.name} could not be deleted`);
         });
     }
