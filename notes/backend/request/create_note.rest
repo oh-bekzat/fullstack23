@@ -1,0 +1,7 @@
+DELETE http://localhost:3001/api/notes/648d8bd45de8952de9d73d23
+# Content-Type: application/json
+
+# {
+#     "content": "I have been thinking of cooking",
+#     "important" : ""
+# }
