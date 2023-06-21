@@ -1,12 +1,15 @@
 const express = require('express')
+require('express-async-errors')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
 const blogsRouter = require('./controllers/blogs')
 
+mongoose.set('strictQuery', false)
 mongoose.connect(config.MONGODB_URI)
 	.then(() => {
 		logger.info('Connected to MongoDB')
@@ -20,9 +23,10 @@ app.use(express.static('build'))
 app.use(express.json())
 
 morgan.token('reqBody', (req) => JSON.stringify(req.body))
-
-app.use(morgan(':method :url :status :response-time ms - :reqBody'))
+app.use(morgan(':method :url :status :reqBody'))
 
 app.use('/api/blogs', blogsRouter)
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 module.exports = app

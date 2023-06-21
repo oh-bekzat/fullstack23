@@ -1,17 +1,8 @@
 const mongoose = require('mongoose')
-
-if (process.argv.length<3) {
-	console.log('give password as argument')
-	process.exit(1)
-}
-
-const password = process.argv[2]
-
-const url =
-  `mongodb+srv://ohbekzat:${password}@phonebook.hpsv5lz.mongodb.net/noteApp?retryWrites=true&w=majority`
+const config = require('./utils/config')
 
 mongoose.set('strictQuery',false)
-mongoose.connect(url)
+mongoose.connect(config.MONGODB_URI)
 
 const noteSchema = new mongoose.Schema({
 	content: String,

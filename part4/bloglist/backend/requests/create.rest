@@ -2,8 +2,7 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Stronghold",
-    "author": "Claud",
-    "url": "asdfsdkf",
-    "likes": 12
+    "title": "From above he gazed",
+    "author": "Bjorn",
+    "url": "asdfsdkf"
 }
