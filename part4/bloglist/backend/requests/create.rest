@@ -1,8 +1,9 @@
-POST http://localhost:3001/api/blogs
+PUT http://localhost:3001/api/blogs/6493605b04156897e5d49bc4
 Content-Type: application/json
 
 {
-    "title": "From above he gazed",
-    "author": "Bjorn",
-    "url": "asdfsdkf"
+    "title": "Notice us",
+    "author": "Bjornie",
+    "url": "asdfsdkff",
+    "likes": 130
 }
