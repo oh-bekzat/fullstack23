@@ -1,9 +1,16 @@
-PUT http://localhost:3001/api/blogs/6493605b04156897e5d49bc4
+POST http://localhost:3001/api/users
 Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9oYmVremF0IiwiaWQiOiI2NDk1OWQxOThkODFlNjM1MTdmNGFhODUiLCJpYXQiOjE2ODc1MjgyNzV9.k-UR-KFetirpbOzdKn2-QOeO4RSrcGLJ8PP8jmB73Lo
 
 {
-    "title": "Notice us",
-    "author": "Bjornie",
-    "url": "asdfsdkff",
-    "likes": 130
+    "username": "sasfaf",
+    "password": "ad",
+    "name": "Hohff"
 }
+
+# {
+#     "title": "Notisadce us",
+#     "author": "Bjdorfanie",
+#     "url": "asdfaasfsdkff",
+#     "likes": 12123
+# }

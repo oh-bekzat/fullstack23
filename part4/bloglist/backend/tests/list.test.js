@@ -1,20 +1,20 @@
 const listHelper = require('../utils/list_helper')
 
-describe('dummy and sum', () => {
+describe('Dummy and sum', () => {
 	const blogs = []
 
-	test('dummy returns one', () => {
+	test('Dummy returns one', () => {
 		const result = listHelper.dummy(blogs)
 		expect(result).toBe(1)
 	})
 
-	test('sum of likes', () => {
+	test('Sum of likes', () => {
 		const result = listHelper.likes(blogs)
 		expect(result).toBe(0)
 	})
 }) 
 
-describe('favourite', () => {
+describe('Favourite blog', () => {
 	const blogs = [
 		{
 			_id: '5a422a851b54a676234d17f7',
