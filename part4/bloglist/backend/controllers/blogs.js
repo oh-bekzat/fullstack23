@@ -44,6 +44,11 @@ blogsRouter.delete('/:id', async (req, res) => {
 })
 
 blogsRouter.put('/:id', async (req, res) => {
+	const userToken = req.user
+	const userBlog = await Blog.findById(req.params.id)
+	if (userToken.id.toString() !== userBlog.user.toString()) {
+		return res.status(401).json({ error: 'This blog is not yours' })
+	}
 	const likes = req.body.likes
 	const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, {$set: {likes}}, {new: true})
 	res.json(updatedBlog)
