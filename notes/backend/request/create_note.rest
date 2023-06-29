@@ -1,8 +1,8 @@
-post http://localhost:3001/api/notes
+post http://localhost:3001/api/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im9oYmVremF0IiwiaWQiOiI2NDk0NTk0YWJkYzhmMzEwNGU5YzdlNWIiLCJpYXQiOjE2ODc4NjY0NTQsImV4cCI6MTY4Nzg3MDA1NH0.7qdtX6DpcQj3s1qD9fKsAiL3CV96kJgaOKRVQL35qtU
 
 {
-    "content": "Alooa is here",
-    "important": true
+    "username": true,
+    "name": "ohbekzat3",
+    "password": "ohbekzat3"
 }
