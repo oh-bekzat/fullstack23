@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -11,14 +11,11 @@ const App = () => {
 
   const [blogs, setBlogs] = useState([])
   const [notification, setNotification] = useState(null)
-
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
-
   const [title, setTitle] = useState('') 
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -36,14 +33,10 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: title,
-      author: author,
-      url: url
-    }
+  const blogFormRef = useRef()
 
+  const addBlog = (blogObject) => {
+    blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
         .then(returnedBlog => {
@@ -100,21 +93,23 @@ const App = () => {
             window.localStorage.removeItem('loggedBlogappUser')
             setUser(null)
           }}>Log out</button>
-          <Togglable buttonLabel="New note">
+          <Togglable buttonLabel="New note" ref={blogFormRef}>
             <BlogForm 
               handleTitleChange={({ target }) => setTitle(target.value)}
               handleAuthorChange={({ target }) => setAuthor(target.value)}
               handleUrlChange={({ target }) => setUrl(target.value)}
-              addBlog={addBlog}
+              createBlog={addBlog}
               title={title}
               author={author}
               url={url}
             />
-          </Togglable>
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )}
-      </div>}
+          </Togglable><br/>
+          {blogs
+            .map(blog =>
+            <Blog key={blog.id} blog={blog} />
+          )}
+        </div>
+      }
     </div>
   )
 }
