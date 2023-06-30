@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
+import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -77,72 +80,40 @@ const App = () => {
     }
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <h2>Log in to application</h2>
-      <Notification message={notification} /><br />
-      <div>
-        username: <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password: <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div><br />
-      <button type="submit">log in</button>
-    </form>      
-  )
-
-  const blogList = () => (
-    <div>
-      <form onSubmit={addBlog}>
-        <h2>Create new</h2>
-        Title: <input
-          type="text"
-          value={title}
-          name="Title"
-          onChange={({ target }) => setTitle(target.value)}
-        /><br />
-        Author: <input
-          type="text"
-          value={author}
-          name="Author"
-          onChange={({ target }) => setAuthor(target.value)}
-        /><br />
-        URL: <input
-          type="text"
-          value={url}
-          name="Url"
-          onChange={({ target }) => setUrl(target.value)}
-        /><br /><br />
-        <button type="submit">Create</button>
-      </form><br />
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
-  )
-
   return (
     <div>
-      {!user && loginForm()} 
-      {user && <div>
-        <h2>Blogs</h2>
-        <Notification message={notification} />
-        <p>{user.name} logged in</p>
-        <button onClick={() => {
-          window.localStorage.removeItem('loggedBlogappUser')
-          setUser(null)
-        }}>Log out</button>
-        {blogList()}
+      {!user &&
+        <LoginForm 
+          notification={notification}
+          handleLogin={handleLogin}
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}            handlePasswordChange={({ target }) => setPassword(target.value)}
+        />
+      }
+      {user && 
+        <div>
+          <h2>Blogs</h2>
+          <Notification message={notification} />
+          <p>{user.name} logged in</p>
+          <button onClick={() => {
+            window.localStorage.removeItem('loggedBlogappUser')
+            setUser(null)
+          }}>Log out</button>
+          <Togglable buttonLabel="New note">
+            <BlogForm 
+              handleTitleChange={({ target }) => setTitle(target.value)}
+              handleAuthorChange={({ target }) => setAuthor(target.value)}
+              handleUrlChange={({ target }) => setUrl(target.value)}
+              addBlog={addBlog}
+              title={title}
+              author={author}
+              url={url}
+            />
+          </Togglable>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
       </div>}
     </div>
   )
