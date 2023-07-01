@@ -25,7 +25,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.0",
     "mongoose-unique-validator": "^4.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.2.15",

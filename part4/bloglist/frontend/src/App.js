@@ -13,9 +13,6 @@ const App = () => {
   const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('') 
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -41,9 +38,6 @@ const App = () => {
       .create(blogObject)
         .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
-        setTitle('')
-        setAuthor('')
-        setUrl('')
         setNotification(`A new blog ${returnedBlog.title} ${returnedBlog.author} added`)
         setTimeout(() => {
           setNotification(null)
@@ -95,13 +89,7 @@ const App = () => {
           }}>Log out</button>
           <Togglable buttonLabel="New note" ref={blogFormRef}>
             <BlogForm 
-              handleTitleChange={({ target }) => setTitle(target.value)}
-              handleAuthorChange={({ target }) => setAuthor(target.value)}
-              handleUrlChange={({ target }) => setUrl(target.value)}
               createBlog={addBlog}
-              title={title}
-              author={author}
-              url={url}
             />
           </Togglable><br/>
           {blogs
