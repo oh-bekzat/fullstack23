@@ -30,12 +30,7 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (req, res) => {
 	res.status(204).end()
 })
 
-blogsRouter.put('/:id', middleware.userExtractor, async (req, res) => {
-	const userToken = req.user
-	const userBlog = await Blog.findById(req.params.id)
-	if (userToken.id.toString() !== userBlog.user.toString()) {
-		return res.status(401).json({ error: 'This blog is not yours' })
-	}
+blogsRouter.put('/:id', async (req, res) => {
 	const likes = req.body.likes
 	const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, {$set: {likes}}, {new: true})
 	res.json(updatedBlog)

@@ -16,9 +16,10 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    blogService.getAll()
+      .then(blogs =>
+        setBlogs(blogs)
+      )  
   }, [])
 
   useEffect(() => {
@@ -67,6 +68,10 @@ const App = () => {
     }
   }
 
+  const removeBlog = (blogId) => {
+    setBlogs(blogs.filter((blog) => blog._id !== blogId));
+  };
+
   return (
     <div>
       {!user &&
@@ -75,7 +80,8 @@ const App = () => {
           handleLogin={handleLogin}
           username={username}
           password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}            handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
         />
       }
       {user && 
@@ -93,8 +99,9 @@ const App = () => {
             />
           </Togglable><br/>
           {blogs
+            .sort((a, b) => b.likes - a.likes)
             .map(blog =>
-            <Blog key={blog.id} blog={blog} />
+              <Blog key={blog._id} blog={blog} onRemove={removeBlog} currentUser={user} />
           )}
         </div>
       }

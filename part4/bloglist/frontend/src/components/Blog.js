@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
+import { useState } from 'react'
+
+const Blog = ({ blog, onRemove, currentUser }) => {
+
+  const [isActive, setIsActive] = useState(false)
+  const [likes, setLikes] = useState(blog.likes)
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -8,15 +14,38 @@ const Blog = ({ blog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  const [isActive, setIsActive] = useState(false)
+
+  const likeBlog = () => {
+    const updatedBlog = { ...blog, likes: blog.likes + 1 }
+    blogService
+      .put(updatedBlog)
+        .then(returnedBlog => {
+        setLikes(returnedBlog.likes)
+        blog.likes = returnedBlog.likes
+      })
+  }
+
+  const remove = () => {
+    if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
+      blogService
+      .dispose(blog._id.toString())
+        .then(() => {
+          onRemove(blog._id);
+        })
+    }
+  }
+
   return (
     <div style={blogStyle}>
       {blog.title} {blog.author}
       {isActive ? (
         <div>
           {blog.url}<br/>
-          Likes: {blog.likes} <button>Like</button><br/>
-          {blog.user}<br/>
+          Likes: {likes} <button onClick={likeBlog}>Like</button><br/>
+          {blog.user.name.toString()}<br/>
+          {currentUser && blog.user.id === currentUser.id && (
+            <button onClick={remove}>Remove</button>
+          )}
           <button onClick={() => setIsActive(false)}>Hide</button>
         </div>
       ) : (
