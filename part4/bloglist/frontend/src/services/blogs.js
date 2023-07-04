@@ -11,7 +11,7 @@ const setToken = newToken => {
 const getAll = async () => {
   const request = axios.get(baseUrl)
   const response = await request
-    return response.data
+  return response.data
 }
 
 const create = async newBlog => {
@@ -40,5 +40,4 @@ const dispose = async id => {
   await axios.delete(url, config)
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { getAll, create, put, dispose, setToken }

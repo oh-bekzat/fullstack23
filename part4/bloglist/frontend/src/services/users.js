@@ -11,8 +11,7 @@ const setToken = newToken => {
 const get = async id => {
   const request = axios.get(`${baseUrl}/${id}`)
   const response = await request
-    return response.data
+  return response.data
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { get, setToken }

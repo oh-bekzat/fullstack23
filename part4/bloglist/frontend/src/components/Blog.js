@@ -19,7 +19,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
     blogService
       .put(updatedBlog)
-        .then(returnedBlog => {
+      .then(returnedBlog => {
         setLikes(returnedBlog.likes)
         blog.likes = returnedBlog.likes
       })
@@ -28,9 +28,9 @@ const Blog = ({ blog, onRemove, currentUser }) => {
   const remove = () => {
     if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
       blogService
-      .dispose(blog._id.toString())
+        .dispose(blog._id.toString())
         .then(() => {
-          onRemove(blog._id);
+          onRemove(blog._id)
         })
     }
   }
@@ -39,7 +39,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     <div style={blogStyle}>
       {blog.title} {blog.author}
       {isActive ? (
-        <div>
+        <div className="blog">
           {blog.url}<br/>
           Likes: {likes} <button onClick={likeBlog}>Like</button><br/>
           {blog.user.name.toString()}<br/>
@@ -54,5 +54,5 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     </div>
   )
 }
-  
+
 export default Blog
