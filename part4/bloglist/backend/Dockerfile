@@ -37,6 +37,9 @@ FROM base
 # Copy built application
 COPY --from=build /app /app
 
+# Set environment variable
+ENV NODE_ENV=production
+
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3001
-CMD [ "npm", "run", "start" ]
+CMD [ "node", "index.js" ]
