@@ -37,12 +37,12 @@ const Blog = ({ blog, onRemove, currentUser }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author}
+      <div>{blog.title}</div>{blog.author}
       {isActive ? (
         <div className="blog">
           {blog.url}<br/>
           Likes: {likes} <button onClick={likeBlog}>Like</button><br/>
-          {blog.user.name.toString()}<br/>
+          {blog.user.name}<br/>
           {currentUser && blog.user.id === currentUser.id && (
             <button onClick={remove}>Remove</button>
           )}
