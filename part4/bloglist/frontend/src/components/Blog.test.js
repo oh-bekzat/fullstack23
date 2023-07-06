@@ -16,8 +16,10 @@ test('Renders title and author', () => {
   const title = screen.getByText('Here is the blog')
   const author = screen.getByText('Here is the blog')
   const url = screen.queryByText('I\'m not supposed to be there')
+  const likes = screen.queryByText('12')
 
   expect(title).toBeDefined()
   expect(author).toBeDefined()
   expect(url).toBeNull()
+  expect(likes).toBeNull()
 })
