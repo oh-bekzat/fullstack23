@@ -38,6 +38,7 @@ const App = () => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
+        returnedBlog.user = user // Include the complete user object in the returned blog
         setBlogs(blogs.concat(returnedBlog))
         setNotification(`A new blog ${returnedBlog.title} ${returnedBlog.author} added`)
         setTimeout(() => {

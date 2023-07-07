@@ -12,11 +12,12 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
 		likes: body.likes !== undefined ? body.likes : 0,
 		user: user.id
 	})
-
+  
 	const savedBlog = await blog.save()
-	user.blogs = user.blogs.concat(savedBlog.id)
+  
+	user.blogs = user.blogs.concat(savedBlog.id) // Ensure that user.blogs is initialized as an array
 	await user.save()
-
+  
 	res.status(201).json(savedBlog)
 })
 
