@@ -37,19 +37,20 @@ const Blog = ({ blog, onRemove, currentUser }) => {
 
   return (
     <div style={blogStyle}>
-      <div>{blog.title}</div>{blog.author}
+      <div>{blog.title}</div>
+      <div>{blog.author}</div>
       {isActive ? (
         <div className="blog">
-          {blog.url}<br/>
-          Likes: {likes} <button onClick={likeBlog}>Like</button><br/>
-          {blog.user.name}<br/>
+          <div>{blog.url}</div>
+          <div>Likes: {likes}</div><button onClick={likeBlog}>Like</button>
+          <div>{blog.user.name}</div>
           {currentUser && blog.user.id === currentUser.id && (
             <button onClick={remove}>Remove</button>
           )}
-          <button onClick={() => setIsActive(false)}>Hide</button>
+          <button onClick={() => setIsActive((prevState) => !prevState)}>Hide</button>
         </div>
       ) : (
-        <button onClick={() => setIsActive(true)}>Show</button>
+        <button onClick={() => setIsActive((prevState) => !prevState)}>Show</button>
       )}
     </div>
   )
