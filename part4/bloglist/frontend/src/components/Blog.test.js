@@ -1,8 +1,15 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
+import blogService from '../services/blogs'
+
+jest.mock('../services/blogs', () => {
+  return {
+    put: jest.fn(),
+  }
+})
 
 test('Renders title and author', () => {
   const blog = {
@@ -50,4 +57,31 @@ test('Clicking show reveals url and likes', async () => {
   expect(url).toBeDefined()
   expect(likes).toBeDefined()
   expect(hideButton).toBeDefined()
+})
+
+test('Two clicks on \'like\' call the event handler twice', async () => {
+  const blog = {
+    title: 'Here is the blog',
+    author: 'Mlu',
+    likes: 12,
+    url: 'Im not supposed to be there',
+    user: {
+      name: 'Bekzat',
+      id: '649c275b5d448c62b599e7d1'
+    }
+  }
+
+  blogService.put.mockResolvedValue({ likes: 13 })
+
+  render(<Blog blog={blog} currentUser={{ id:'649c275b5d448c62b599e7d1' }} likeBlog={jest.fn()} />)
+
+  const user = userEvent.setup()
+  const showButton = screen.getByText('Show')
+  await user.click(showButton)
+
+  const likeButton = screen.getByText('Like')
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(blogService.put).toHaveBeenCalledTimes(2)
 })
