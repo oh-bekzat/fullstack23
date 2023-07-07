@@ -93,7 +93,7 @@ const App = () => {
             window.localStorage.removeItem('loggedBlogappUser')
             setUser(null)
           }}>Log out</button>
-          <Togglable buttonLabel="New note" ref={blogFormRef}>
+          <Togglable buttonLabel="New blog" ref={blogFormRef}>
             <BlogForm
               createBlog={addBlog}
             />

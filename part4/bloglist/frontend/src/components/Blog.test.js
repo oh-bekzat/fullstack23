@@ -1,4 +1,5 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -80,8 +81,10 @@ test('Two clicks on \'like\' call the event handler twice', async () => {
   await user.click(showButton)
 
   const likeButton = screen.getByText('Like')
-  fireEvent.click(likeButton)
-  fireEvent.click(likeButton)
+  await act(async () => {
+    fireEvent.click(likeButton)
+    fireEvent.click(likeButton)
+  })
 
   expect(blogService.put).toHaveBeenCalledTimes(2)
 })

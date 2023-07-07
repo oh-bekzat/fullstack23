@@ -15,7 +15,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     marginBottom: 5
   }
 
-  const likeBlog = () => {
+  const likeBlog = async () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
     blogService
       .put(updatedBlog)
