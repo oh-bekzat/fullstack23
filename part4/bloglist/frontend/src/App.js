@@ -90,7 +90,7 @@ const App = () => {
           <h2>Blogs</h2>
           <Notification message={notification} />
           <p>{user.name} logged in</p>
-          <button onClick={() => {
+          <button id="logout-button" onClick={() => {
             window.localStorage.removeItem('loggedBlogappUser')
             setUser(null)
           }}>Log out</button>

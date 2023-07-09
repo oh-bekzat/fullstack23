@@ -12,6 +12,11 @@ describe('Blog app', function() {
 
   it('Login form is shown', function() {
     cy.contains('Log in to application')
+    cy.contains('username')
+    cy.get('#username')
+    cy.contains('password')
+    cy.get('#password')
+    cy.contains('button','Log in')
   })
 
   describe('Login',function() {
@@ -19,6 +24,7 @@ describe('Blog app', function() {
       cy.get('#username').type('ohbekzat')
       cy.get('#password').type('ohbekzat')
       cy.get('#login-button').click()
+      cy.contains('Log out')
 
       cy.contains('Bekzat Ongdassynov logged in')
     })
@@ -34,7 +40,9 @@ describe('Blog app', function() {
 
   describe('When logged in', function() {
     beforeEach(function() {
-      // log in user here
+      cy.get('#username').type('ohbekzat')
+      cy.get('#password').type('ohbekzat')
+      cy.get('#login-button').click()
     })
 
     it('a blog can be created', function() {
