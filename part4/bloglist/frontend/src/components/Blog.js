@@ -45,7 +45,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
           <div>Likes: {likes}</div><button id="like-button" onClick={likeBlog}>Like</button>
           <div>{blog.user.name}</div>
           {currentUser && blog.user && blog.user.id === currentUser.id && (
-            <button onClick={remove}>Remove</button>
+            <button id="remove-button" onClick={remove}>Remove</button>
           )}
           <button id="hide-button" onClick={() => setIsActive((prevState) => !prevState)}>Hide</button>
         </div>
