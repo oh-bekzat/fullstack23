@@ -46,7 +46,15 @@ describe('Blog app', function() {
     })
 
     it('a blog can be created', function() {
-      // ...
+      cy.contains('New blog').click()
+      cy.get('#title').type('Cypress is great')
+      cy.get('#author').type('Mlukkai')
+      cy.get('#url').type('fullstackopen.com/en/part5')
+      cy.contains('Hide')
+      cy.get('#blog-button').click()
+      cy.contains('Cypress is great')
+      cy.contains('Mlukkai')
+      cy.contains('Show')
     })
 
     it('user can like a blog', function() {
