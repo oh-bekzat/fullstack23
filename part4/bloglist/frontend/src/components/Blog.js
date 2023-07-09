@@ -36,7 +36,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div className="blog" style={blogStyle}>
       <div>{blog.title}</div>
       <div>{blog.author}</div>
       {isActive ? (

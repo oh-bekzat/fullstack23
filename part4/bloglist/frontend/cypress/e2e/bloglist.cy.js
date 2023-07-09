@@ -79,7 +79,7 @@ describe('Blog app', function() {
         cy.get('html').should('not.contain', 'fullstackopen.com/en/part5')
       })
 
-      it.only('only the author can remove the blog', function() {
+      it('only the author can remove the blog', function() {
         cy.get('#logout-button').click()
         const user = {
           name: 'Bekzat Ongdassynov',
@@ -97,8 +97,65 @@ describe('Blog app', function() {
 
     })
 
-    it('blogs are ordered by likes descending', function() {
-      // ...
+    it.only('blogs are ordered by likes descending', function() {
+      cy.contains('New blog').click()
+      cy.get('#title').type('Testing is tiring')
+      cy.get('#author').type('Bekzat')
+      cy.get('#url').type('fullstackopen.com')
+      cy.get('#blog-button').click()
+
+      cy.contains('New blog').click()
+      cy.get('#title').type('Javascript is cool')
+      cy.get('#author').type('Bekzat')
+      cy.get('#url').type('fullstackopen.ru')
+      cy.get('#blog-button').click()
+
+      cy.contains('New blog').click()
+      cy.get('#title').type('I miss my girlfriend')
+      cy.get('#author').type('Bekzat')
+      cy.get('#url').type('fullstackopen.eu')
+      cy.get('#blog-button').click()
+
+      cy.get('.blog').should('have.length', 3).then(() => {
+        cy.get('.blog').eq(0).within(() => {
+          cy.get('#show-button').click()
+          cy.get('#like-button').click().wait(1000)
+          cy.get('#hide-button').click()
+        })
+
+        cy.get('.blog').eq(1).within(() => {
+          cy.get('#show-button').click()
+          cy.get('#like-button').click().wait(1000).click().wait(1000)
+          cy.get('#hide-button').click()
+        })
+
+        cy.get('.blog').eq(2).within(() => {
+          cy.get('#show-button').click()
+          cy.get('#like-button').click().wait(1000).click().wait(1000).click().wait(1000)
+          cy.get('#hide-button').click()
+        })
+      })
+
+      cy.contains('New blog').click()
+      cy.get('#title').type('I am a loser')
+      cy.get('#author').type('Bekzat')
+      cy.get('#url').type('fullstack.com')
+      cy.get('#blog-button').click()
+
+      cy.get('.blog').should('have.length', 4).then(() => {
+        cy.get('.blog').eq(0).within(() => {
+          cy.contains('I miss my girlfriend')
+        })
+        cy.get('.blog').eq(1).within(() => {
+          cy.contains('Javascript is cool')
+        })
+        cy.get('.blog').eq(2).within(() => {
+          cy.contains('Testing is tiring')
+        })
+        cy.get('.blog').eq(3).within(() => {
+          cy.contains('I am a loser')
+        })
+      })
     })
   })
 })
