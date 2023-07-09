@@ -14,6 +14,7 @@ const LoginForm = ({
     <Notification message={notification} />
     <div>
         username: <input
+        id="username"
         type="text"
         value={username}
         name="Username"
@@ -22,13 +23,14 @@ const LoginForm = ({
     </div>
     <div>
         password: <input
+        id="password"
         type="password"
         value={password}
         name="Password"
         onChange={handlePasswordChange}
       />
     </div><br />
-    <button type="submit">log in</button>
+    <button id="login-button" type="submit">log in</button>
   </form>
 )
 
