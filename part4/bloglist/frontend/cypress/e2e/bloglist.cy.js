@@ -57,12 +57,26 @@ describe('Blog app', function() {
       cy.contains('Show')
     })
 
-    it('user can like a blog', function() {
-      // ...
-    })
+    describe('When blog is created', function() {
+      beforeEach(function() {
+        cy.contains('New blog').click()
+        cy.get('#title').type('Cypress is great')
+        cy.get('#author').type('Mlukkai')
+        cy.get('#url').type('fullstackopen.com/en/part5')
+        cy.get('#blog-button').click()
+      })
 
-    it('a blog can be removed', function() {
-      // ...
+      it.only('user can like a blog', function() {
+        cy.get('#show-button').click()
+        cy.contains('Likes: 0')
+        cy.get('#like-button').click()
+        cy.contains('Likes: 1')
+      })
+
+      it('a blog can be removed', function() {
+        // ...
+      })
+
     })
 
     it('only the author can remove the blog', function() {
