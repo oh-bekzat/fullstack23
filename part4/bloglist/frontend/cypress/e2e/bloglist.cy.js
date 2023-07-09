@@ -74,15 +74,27 @@ describe('Blog app', function() {
         cy.contains('Likes: 1')
       })
 
-      it.only('user-owner can delete a blog', function() {
+      it('user-owner can delete a blog', function() {
         cy.get('#remove-button').click()
         cy.get('html').should('not.contain', 'fullstackopen.com/en/part5')
       })
 
-    })
+      it.only('only the author can remove the blog', function() {
+        cy.get('#logout-button').click()
+        const user = {
+          name: 'Bekzat Ongdassynov',
+          username: 'ohbekzat2',
+          password: 'ohbekzat2'
+        }
+        cy.request('POST', 'http://localhost:3001/api/users/', user)
+        cy.visit('http://localhost:3000')
+        cy.get('#username').type('ohbekzat2')
+        cy.get('#password').type('ohbekzat2')
+        cy.get('#login-button').click()
+        cy.get('#show-button').click()
+        cy.contains('#remove-button').should('not.exist')
+      })
 
-    it('only the author can remove the blog', function() {
-      // ...
     })
 
     it('blogs are ordered by likes descending', function() {
