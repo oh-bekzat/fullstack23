@@ -1,0 +1,25 @@
+button {
+    border: none;
+    border-radius: 2px;
+    padding: 5px 10px;
+}
+
+.good-button {
+    background-color: green;
+    color: white;
+}
+
+.ok-button {
+    background-color: blue;
+    color: white;
+}
+
+.bad-button {
+    background-color: red;
+    color: white;
+}
+
+.zero-button {
+    background-color: grey;
+    color: white;
+}

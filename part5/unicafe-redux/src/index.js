@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './index.css'
 
 import { createStore } from 'redux'
 import reducer from './reducer'
@@ -30,10 +31,10 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={good}>good</button> 
-      <button onClick={ok}>ok</button> 
-      <button onClick={bad}>bad</button>
-      <button onClick={zero}>reset stats</button>
+      <button className="good-button" onClick={good}>good</button> 
+      <button className="ok-button" onClick={ok}>ok</button> 
+      <button className="bad-button" onClick={bad}>bad</button>
+      <button className="zero-button" onClick={zero}>reset stats</button>
       <div>good {store.getState().good}</div>
       <div>ok {store.getState().ok}</div>
       <div>bad {store.getState().bad}</div>
