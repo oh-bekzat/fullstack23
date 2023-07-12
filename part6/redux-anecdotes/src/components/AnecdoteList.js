@@ -8,13 +8,13 @@ const AnecdoteList = () => {
     const dispatch = useDispatch()
   
     const vote = (id) => {
-        dispatch(voteAnecdote(id))
+        dispatch(voteAnecdote({id}))
     }
 
-    const filteredAnecdotes = anecdotes.filter((anecdote) =>
+    const filteredAnecdotes = anecdotes.filter(anecdote =>
         anecdote.content.toLowerCase().includes(filter.toLowerCase())
     )
-    
+
     return (
         <>
             {filteredAnecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
