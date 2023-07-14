@@ -8,6 +8,7 @@ const Notification = () => {
     borderWidth: 1,
     marginBottom: 5,
     display: notification ? 'block' : 'none',
+    color: notification && notification.includes('Error') ? 'red' : 'inherit'
   }
 
   return (
