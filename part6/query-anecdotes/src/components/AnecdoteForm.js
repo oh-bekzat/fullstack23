@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient } from 'react-query'
 import { createAnecdote } from '../requests'
-import { useContext } from 'react'
-import NotificationContext from '../NotificationContext'
+import { useNotificationDispatch } from '../NotificationContext'
 
-const AnecdoteForm = ({type}) => {
-  const [notification, dispatch] = useContext(NotificationContext)
+const AnecdoteForm = () => {
+  const dispatch = useNotificationDispatch()
   const queryClient = useQueryClient()
-
   const newAnecdoteMutation = useMutation(createAnecdote, {
     onSuccess: () => {
       queryClient.invalidateQueries('anecdotes')
@@ -18,11 +16,14 @@ const AnecdoteForm = ({type}) => {
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
     newAnecdoteMutation.mutate({ content, votes: 0 })
-    dispatch({ type, payload: content })
+    setTimeout(() => {
+      dispatch({ type: 'CLEAR' })
+    }, 5000)
+    dispatch({ type: 'CREATE', payload: content })
   }
-  
+
   return (
-    <div>{notification}
+    <div>
       <h3>create new</h3>
       <form onSubmit={onCreate}>
         <input name='anecdote' />
