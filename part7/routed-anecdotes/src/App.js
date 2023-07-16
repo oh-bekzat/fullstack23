@@ -4,18 +4,30 @@ import {
   Routes, Route, Link, useParams, useNavigate
 } from 'react-router-dom'
 import  { useField } from './hooks/index'
+import { Table, Alert, Navbar, Nav } from 'react-bootstrap'
 
 
 const Menu = () => {
   const padding = {
-    paddingRight: 5
+    paddingLeft: 20 
   }
   return (
-    <div>
-      <Link style={padding} to="/anecdotes">anecdotes</Link>
-      <Link style={padding} to="/create">create new</Link>
-      <Link style={padding} to="/about">about</Link>
-    </div>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="me-auto">
+          <Nav.Link href="#" as="span">
+            <Link style={padding} to="/anecdotes">anecdotes</Link>
+          </Nav.Link>
+          <Nav.Link href="#" as="span">
+            <Link style={padding} to="/create">create new</Link>
+          </Nav.Link>
+          <Nav.Link href="#" as="span">
+            <Link style={padding} to="/about">about</Link>
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   )
 }
 
@@ -35,9 +47,31 @@ const Anecdote = ({ anecdotes }) => {
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
+    <Table striped>
+      <tbody>
+        {anecdotes.map(anecdote =>
+          <tr key={anecdote.id}>
+            <td>
+              <Link to={`/anecdotes/${anecdote.id}`}>
+                {anecdote.content}
+              </Link>
+            </td>
+            <td>
+              {anecdote.author}
+            </td>
+            <td>
+              {anecdote.url}
+            </td>
+            <td>
+              {anecdote.votes}
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </Table>
+    {/* <ul>
       {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
-    </ul>
+    </ul> */}
   </div>
 )
 
@@ -154,11 +188,16 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Software anecdotes</h1>
       <Router>
         <Menu />
-        {notification}
+        {/* {notification} */}
+        {(notification &&
+          <Alert variant="success">
+            {notification}
+          </Alert>
+        )}
         <Routes>
           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
           <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
