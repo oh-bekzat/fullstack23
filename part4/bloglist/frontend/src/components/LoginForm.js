@@ -2,7 +2,6 @@ import Notification from './Notification'
 import PropTypes from 'prop-types'
 
 const LoginForm = ({
-  notification,
   handleLogin,
   username,
   password,
@@ -11,7 +10,7 @@ const LoginForm = ({
 }) => (
   <form onSubmit={handleLogin}>
     <h2>Log in to application</h2>
-    <Notification message={notification} />
+    <Notification />
     <div>
       username:{' '}
       <input

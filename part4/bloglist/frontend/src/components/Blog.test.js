@@ -60,7 +60,7 @@ test('Clicking show reveals url and likes', async () => {
   expect(hideButton).toBeDefined()
 })
 
-test("Two clicks on 'like' call the event handler twice", async () => {
+test('Two clicks on like call the event handler twice', async () => {
   const blog = {
     title: 'Here is the blog',
     author: 'Mlu',

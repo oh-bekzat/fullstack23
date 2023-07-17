@@ -1,54 +1,43 @@
 /* eslint-env node */
 module.exports = {
-  'env': {
-    'browser': true,
-    'es6': true,
+  env: {
+    browser: true,
+    es6: true,
     'jest/globals': true,
-    'cypress/globals': true
+    'cypress/globals': true,
   },
-  'extends': ['eslint:recommended', 'plugin:prettier/recommended'],
-  'parserOptions': {
-    'ecmaFeatures': {
-      'jsx': true
+  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  parserOptions: {
+    parser: 'babel-eslint',
+    ecmaFeatures: {
+      jsx: true,
     },
-    'ecmaVersion': 2018,
-    'sourceType': 'module'
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
-  'plugins': [
-    'react', 'jest', 'cypress'
+  plugins: [
+    'react',
+    {
+      'jest': {},
+      'cypress': {}
+    }
   ],
-  'rules': {
-    'indent': [
-      'error',
-      2
-    ],
-    'linebreak-style': [
-      'error',
-      'unix'
-    ],
-    'quotes': [
-      'error',
-      'single'
-    ],
-    'semi': [
-      'error',
-      'never'
-    ],
-    'eqeqeq': 'error',
+  rules: {
+    indent: ['error', 2],
+    'linebreak-style': ['error', 'unix'],
+    quotes: ['error', 'single'],
+    semi: ['error', 'never'],
+    eqeqeq: 'error',
     'no-trailing-spaces': 'error',
-    'object-curly-spacing': [
-      'error', 'always'
-    ],
-    'arrow-spacing': [
-      'error', { 'before': true, 'after': true }
-    ],
+    'object-curly-spacing': ['error', 'always'],
+    'arrow-spacing': ['error', { before: true, after: true }],
     'no-console': 0,
     'react/prop-types': 0,
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
   },
-  'settings': {
-    'react': {
-      'version': 'detect'
-    }
-  }
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 }

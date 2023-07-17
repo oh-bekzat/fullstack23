@@ -1,10 +1,15 @@
 import blogService from '../services/blogs'
-
+import { useDispatch } from 'react-redux'
+import {
+  removeNotification,
+  likeNotification,
+} from '../reducers/notificationReducer'
 import { useState } from 'react'
 
 const Blog = ({ blog, onRemove, currentUser }) => {
   const [isActive, setIsActive] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
+  const dispatch = useDispatch()
 
   const blogStyle = {
     paddingTop: 10,
@@ -19,6 +24,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     blogService.put(updatedBlog).then((returnedBlog) => {
       setLikes(returnedBlog.likes)
       blog.likes = returnedBlog.likes
+      dispatch(likeNotification(returnedBlog))
     })
   }
 
@@ -26,6 +32,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
       blogService.dispose(blog._id.toString()).then(() => {
         onRemove(blog._id)
+        dispatch(removeNotification(blog))
       })
     }
   }

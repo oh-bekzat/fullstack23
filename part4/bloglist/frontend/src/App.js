@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -6,10 +7,14 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import {
+  createNotification,
+  wrongInitialsNotification,
+} from './reducers/notificationReducer'
 
 const App = () => {
+  const dispatch = useDispatch()
   const [blogs, setBlogs] = useState([])
-  const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -34,12 +39,7 @@ const App = () => {
     blogService.create(blogObject).then((returnedBlog) => {
       returnedBlog.user = user
       setBlogs(blogs.concat(returnedBlog))
-      setNotification(
-        `A new blog ${returnedBlog.title} ${returnedBlog.author} added`,
-      )
-      setTimeout(() => {
-        setNotification(null)
-      }, 5000)
+      dispatch(createNotification(returnedBlog))
     })
   }
 
@@ -57,10 +57,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setNotification('Wrong username or password')
-      setTimeout(() => {
-        setNotification(null)
-      }, 5000)
+      dispatch(wrongInitialsNotification())
     }
   }
 
@@ -72,7 +69,6 @@ const App = () => {
     <div>
       {!user && (
         <LoginForm
-          notification={notification}
           handleLogin={handleLogin}
           username={username}
           password={password}
@@ -83,7 +79,7 @@ const App = () => {
       {user && (
         <div>
           <h2>Blogs</h2>
-          <Notification message={notification} />
+          <Notification />
           <p>{user.name} logged in</p>
           <button
             id="logout-button"
