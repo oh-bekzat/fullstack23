@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("throw new Error(\"Module parse failed: Unexpected token (5:60)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n| import App from './App'\\n| \\n> ReactDOM.createRoot(document.getElementById('root')).render(<App />)\");\n\n//# sourceURL=webpack://webpack-part7/./src/index.js?");
+eval("throw new Error(\"Module parse failed: Unexpected token (8:60)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n| import './index.css'\\n| \\n> ReactDOM.createRoot(document.getElementById('root')).render(<App />)\");\n\n//# sourceURL=webpack://webpack-part7/./src/index.js?");
 
 /***/ })
 
