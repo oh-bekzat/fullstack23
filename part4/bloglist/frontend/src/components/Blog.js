@@ -3,7 +3,6 @@ import blogService from '../services/blogs'
 import { useState } from 'react'
 
 const Blog = ({ blog, onRemove, currentUser }) => {
-
   const [isActive, setIsActive] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
@@ -12,26 +11,22 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     paddingLeft: 2,
     border: 'solid',
     borderWidth: 1,
-    marginBottom: 5
+    marginBottom: 5,
   }
 
   const likeBlog = async () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 }
-    blogService
-      .put(updatedBlog)
-      .then(returnedBlog => {
-        setLikes(returnedBlog.likes)
-        blog.likes = returnedBlog.likes
-      })
+    blogService.put(updatedBlog).then((returnedBlog) => {
+      setLikes(returnedBlog.likes)
+      blog.likes = returnedBlog.likes
+    })
   }
 
   const remove = () => {
     if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
-      blogService
-        .dispose(blog._id.toString())
-        .then(() => {
-          onRemove(blog._id)
-        })
+      blogService.dispose(blog._id.toString()).then(() => {
+        onRemove(blog._id)
+      })
     }
   }
 
@@ -42,15 +37,30 @@ const Blog = ({ blog, onRemove, currentUser }) => {
       {isActive ? (
         <div className="blog">
           <div>{blog.url}</div>
-          <div>Likes: {likes}</div><button id="like-button" onClick={likeBlog}>Like</button>
+          <div>Likes: {likes}</div>
+          <button id="like-button" onClick={likeBlog}>
+            Like
+          </button>
           <div>{blog.user.name}</div>
           {currentUser && blog.user && blog.user.id === currentUser.id && (
-            <button id="remove-button" onClick={remove}>Remove</button>
+            <button id="remove-button" onClick={remove}>
+              Remove
+            </button>
           )}
-          <button id="hide-button" onClick={() => setIsActive((prevState) => !prevState)}>Hide</button>
+          <button
+            id="hide-button"
+            onClick={() => setIsActive((prevState) => !prevState)}
+          >
+            Hide
+          </button>
         </div>
       ) : (
-        <button id="show-button" onClick={() => setIsActive((prevState) => !prevState)}>Show</button>
+        <button
+          id="show-button"
+          onClick={() => setIsActive((prevState) => !prevState)}
+        >
+          Show
+        </button>
       )}
     </div>
   )

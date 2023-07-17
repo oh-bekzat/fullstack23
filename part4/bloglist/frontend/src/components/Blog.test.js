@@ -17,7 +17,7 @@ test('Renders title and author', () => {
     title: 'Here is the blog',
     author: 'Mlu',
     likes: 12,
-    url: 'Im not supposed to be there'
+    url: 'Im not supposed to be there',
   }
 
   render(<Blog blog={blog} />)
@@ -41,11 +41,11 @@ test('Clicking show reveals url and likes', async () => {
     url: 'Im not supposed to be there',
     user: {
       name: 'Bekzat',
-      id: '649c275b5d448c62b599e7d1'
-    }
+      id: '649c275b5d448c62b599e7d1',
+    },
   }
 
-  render(<Blog blog={blog} currentUser={{ id:'649c275b5d448c62b599e7d1' }} />)
+  render(<Blog blog={blog} currentUser={{ id: '649c275b5d448c62b599e7d1' }} />)
 
   const user = userEvent.setup()
   const button = screen.getByText('Show')
@@ -60,7 +60,7 @@ test('Clicking show reveals url and likes', async () => {
   expect(hideButton).toBeDefined()
 })
 
-test('Two clicks on \'like\' call the event handler twice', async () => {
+test("Two clicks on 'like' call the event handler twice", async () => {
   const blog = {
     title: 'Here is the blog',
     author: 'Mlu',
@@ -68,13 +68,19 @@ test('Two clicks on \'like\' call the event handler twice', async () => {
     url: 'Im not supposed to be there',
     user: {
       name: 'Bekzat',
-      id: '649c275b5d448c62b599e7d1'
-    }
+      id: '649c275b5d448c62b599e7d1',
+    },
   }
 
   blogService.put.mockResolvedValue({ likes: 13 })
 
-  render(<Blog blog={blog} currentUser={{ id:'649c275b5d448c62b599e7d1' }} likeBlog={jest.fn()} />)
+  render(
+    <Blog
+      blog={blog}
+      currentUser={{ id: '649c275b5d448c62b599e7d1' }}
+      likeBlog={jest.fn()}
+    />,
+  )
 
   const user = userEvent.setup()
   const showButton = screen.getByText('Show')

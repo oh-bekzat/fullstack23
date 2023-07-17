@@ -21,6 +21,6 @@ test('<BlogForm /> updates parent state and calls onSubmit', async () => {
   expect(createBlog).toHaveBeenCalledWith({
     title: 'Testing title...',
     author: 'Testing author...',
-    url: 'Testing url...'
+    url: 'Testing url...',
   })
 })

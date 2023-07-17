@@ -8,7 +8,6 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-
   const [blogs, setBlogs] = useState([])
   const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState('')
@@ -16,10 +15,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    blogService.getAll()
-      .then(blogs =>
-        setBlogs(blogs)
-      )
+    blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
   useEffect(() => {
@@ -35,16 +31,16 @@ const App = () => {
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        returnedBlog.user = user
-        setBlogs(blogs.concat(returnedBlog))
-        setNotification(`A new blog ${returnedBlog.title} ${returnedBlog.author} added`)
-        setTimeout(() => {
-          setNotification(null)
-        }, 5000)
-      })
+    blogService.create(blogObject).then((returnedBlog) => {
+      returnedBlog.user = user
+      setBlogs(blogs.concat(returnedBlog))
+      setNotification(
+        `A new blog ${returnedBlog.title} ${returnedBlog.author} added`,
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    })
   }
 
   const handleLogin = async (event) => {
@@ -52,11 +48,10 @@ const App = () => {
 
     try {
       const user = await loginService.login({
-        username, password
+        username,
+        password,
       })
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -75,7 +70,7 @@ const App = () => {
 
   return (
     <div>
-      {!user &&
+      {!user && (
         <LoginForm
           notification={notification}
           handleLogin={handleLogin}
@@ -84,28 +79,37 @@ const App = () => {
           handleUsernameChange={({ target }) => setUsername(target.value)}
           handlePasswordChange={({ target }) => setPassword(target.value)}
         />
-      }
-      {user &&
+      )}
+      {user && (
         <div>
           <h2>Blogs</h2>
           <Notification message={notification} />
           <p>{user.name} logged in</p>
-          <button id="logout-button" onClick={() => {
-            window.localStorage.removeItem('loggedBlogappUser')
-            setUser(null)
-          }}>Log out</button>
+          <button
+            id="logout-button"
+            onClick={() => {
+              window.localStorage.removeItem('loggedBlogappUser')
+              setUser(null)
+            }}
+          >
+            Log out
+          </button>
           <Togglable buttonLabel="New blog" ref={blogFormRef}>
-            <BlogForm
-              createBlog={addBlog}
-            />
-          </Togglable><br/>
+            <BlogForm createBlog={addBlog} />
+          </Togglable>
+          <br />
           {blogs
             .sort((a, b) => b.likes - a.likes)
-            .map(blog =>
-              <Blog key={blog._id} blog={blog} onRemove={removeBlog} currentUser={user} />
-            )}
+            .map((blog) => (
+              <Blog
+                key={blog._id}
+                blog={blog}
+                onRemove={removeBlog}
+                currentUser={user}
+              />
+            ))}
         </div>
-      }
+      )}
     </div>
   )
 }
