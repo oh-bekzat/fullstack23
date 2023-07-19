@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
@@ -11,17 +11,13 @@ import {
   createNotification,
   wrongInitialsNotification,
 } from './reducers/notificationReducer'
+import { initializeBlogs, createBlog } from './reducers/blogReducer'
 
 const App = () => {
   const dispatch = useDispatch()
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -32,15 +28,19 @@ const App = () => {
     }
   }, [])
 
+  useEffect(() => {
+    dispatch(initializeBlogs())
+  }, [dispatch])
+
+  const blogs = useSelector((state) => state.blogs)
+  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
   const blogFormRef = useRef()
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
-    blogService.create(blogObject).then((returnedBlog) => {
-      returnedBlog.user = user
-      setBlogs(blogs.concat(returnedBlog))
-      dispatch(createNotification(returnedBlog))
-    })
+    blogObject.user = { id: user.id, name: user.name, username: user.username }
+    dispatch(createBlog(blogObject))
+    dispatch(createNotification(blogObject))
   }
 
   const handleLogin = async (event) => {
@@ -61,8 +61,9 @@ const App = () => {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
   const removeBlog = (blogId) => {
-    setBlogs(blogs.filter((blog) => blog._id !== blogId))
+    // setBlogs(blogs.filter((blog) => blog._id !== blogId))
   }
 
   return (
@@ -94,16 +95,14 @@ const App = () => {
             <BlogForm createBlog={addBlog} />
           </Togglable>
           <br />
-          {blogs
-            .sort((a, b) => b.likes - a.likes)
-            .map((blog) => (
-              <Blog
-                key={blog._id}
-                blog={blog}
-                onRemove={removeBlog}
-                currentUser={user}
-              />
-            ))}
+          {sortedBlogs.map((blog) => (
+            <Blog
+              key={blog._id}
+              blog={blog}
+              onRemove={removeBlog}
+              currentUser={user}
+            />
+          ))}
         </div>
       )}
     </div>
