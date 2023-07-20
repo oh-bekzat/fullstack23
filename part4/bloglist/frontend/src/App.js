@@ -11,7 +11,7 @@ import {
   createNotification,
   wrongInitialsNotification,
 } from './reducers/notificationReducer'
-import { initializeBlogs, createBlog } from './reducers/blogReducer'
+import { initializeBlogs, createBlog, removeBlog } from './reducers/blogReducer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -38,7 +38,7 @@ const App = () => {
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
-    blogObject.user = { id: user.id, name: user.name, username: user.username }
+    blogObject.user = { id: user._id, name: user.name, username: user.username }
     dispatch(createBlog(blogObject))
     dispatch(createNotification(blogObject))
   }
@@ -61,9 +61,8 @@ const App = () => {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
-  const removeBlog = (blogId) => {
-    // setBlogs(blogs.filter((blog) => blog._id !== blogId))
+  const deleteBlog = (blogId) => {
+    dispatch(removeBlog(blogId))
   }
 
   return (
@@ -99,7 +98,7 @@ const App = () => {
             <Blog
               key={blog._id}
               blog={blog}
-              onRemove={removeBlog}
+              onRemove={deleteBlog}
               currentUser={user}
             />
           ))}

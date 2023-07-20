@@ -1,14 +1,14 @@
-import blogService from '../services/blogs'
 import { useDispatch } from 'react-redux'
 import {
   removeNotification,
   likeNotification,
 } from '../reducers/notificationReducer'
+import { likeBlog } from '../reducers/blogReducer'
 import { useState } from 'react'
 
 const Blog = ({ blog, onRemove, currentUser }) => {
   const [isActive, setIsActive] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
+  // const [likes, setLikes] = useState(blog.likes)
   const dispatch = useDispatch()
   const blogStyle = {
     paddingTop: 10,
@@ -18,21 +18,15 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     marginBottom: 5,
   }
 
-  const likeBlog = async () => {
-    const updatedBlog = { ...blog, likes: blog.likes + 1 }
-    blogService.put(updatedBlog).then((returnedBlog) => {
-      setLikes(returnedBlog.likes)
-      blog.likes = returnedBlog.likes
-      dispatch(likeNotification(returnedBlog))
-    })
+  const like = async () => {
+    dispatch(likeBlog(blog))
+    dispatch(likeNotification(blog))
   }
 
   const remove = () => {
     if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
-      blogService.dispose(blog._id.toString()).then(() => {
-        onRemove(blog._id)
-        dispatch(removeNotification(blog))
-      })
+      onRemove(blog._id)
+      dispatch(removeNotification(blog))
     }
   }
 
@@ -43,8 +37,8 @@ const Blog = ({ blog, onRemove, currentUser }) => {
       {isActive ? (
         <div className="blog">
           <div>{blog.url}</div>
-          <div>Likes: {likes}</div>
-          <button id="like-button" onClick={likeBlog}>
+          <div>Likes: {blog.likes}</div>
+          <button id="like-button" onClick={like}>
             Like
           </button>
           <div>{blog.user.name}</div>
