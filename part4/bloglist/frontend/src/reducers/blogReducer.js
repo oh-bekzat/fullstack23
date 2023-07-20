@@ -12,10 +12,6 @@ const blogSlice = createSlice({
     setBlogs(state, action) {
       return action.payload
     },
-    // updateBlog(state, action) {
-    //   const { id, likes } = action.payload
-    //   return state.map((blog) => (blog.id === id ? { ...blog, likes } : blog))
-    // },
     updateBlog(state, action) {
       const newBlog = action.payload
       return state.map((blog) => (blog._id === newBlog._id ? newBlog : blog))

@@ -12,18 +12,20 @@ import {
   wrongInitialsNotification,
 } from './reducers/notificationReducer'
 import { initializeBlogs, createBlog, removeBlog } from './reducers/blogReducer'
+import { setUser, clearUser } from './reducers/userReducer'
 
 const App = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(setUser(user))
+      // setUser(user)
       blogService.setToken(user.token)
     }
   }, [])
@@ -32,13 +34,14 @@ const App = () => {
     dispatch(initializeBlogs())
   }, [dispatch])
 
+  const user = useSelector((state) => state.user)
   const blogs = useSelector((state) => state.blogs)
   const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
   const blogFormRef = useRef()
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
-    blogObject.user = { id: user._id, name: user.name, username: user.username }
+    blogObject.user = { id: user.id, name: user.name, username: user.username }
     dispatch(createBlog(blogObject))
     dispatch(createNotification(blogObject))
   }
@@ -53,7 +56,7 @@ const App = () => {
       })
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(setUser(user))
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -85,7 +88,7 @@ const App = () => {
             id="logout-button"
             onClick={() => {
               window.localStorage.removeItem('loggedBlogappUser')
-              setUser(null)
+              dispatch(clearUser())
             }}
           >
             Log out

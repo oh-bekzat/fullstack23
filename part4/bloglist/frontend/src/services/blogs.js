@@ -18,8 +18,8 @@ const create = async (newBlog) => {
   const config = {
     headers: { Authorization: token },
   }
-
   const response = await axios.post(baseUrl, newBlog, config)
+  console.log(response.data)
   return response.data
 }
 
@@ -29,22 +29,15 @@ const put = async (blog) => {
   }
   const url = `${baseUrl}/${blog._id}`
   const response = await axios.put(url, blog, config)
-  console.log(response.data)
   return response.data
 }
 
 const dispose = async (id) => {
-  try {
-    console.log(id)
-    const config = {
-      headers: { Authorization: token },
-    }
-    const url = `${baseUrl}/${id}`
-    const what = await axios.delete(url, config)
-    console.log(what)
-  } catch (error) {
-    console.log('Error deleting blog:', error)
+  const config = {
+    headers: { Authorization: token },
   }
+  const url = `${baseUrl}/${id}`
+  await axios.delete(url, config)
 }
 
 export default { getAll, create, put, dispose, setToken }

@@ -6,15 +6,28 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser(state, action) {
+    setU(state, action) {
       return action.payload
     },
     // eslint-disable-next-line no-unused-vars
-    clearUser(state, action) {
+    clearU(state, action) {
       return null
     },
   },
 })
 
-export const { setUser, clearUser } = userSlice.actions
+export const setUser = (user) => {
+  return async (dispatch) => {
+    dispatch(setU(user))
+  }
+}
+
+export const clearUser = () => {
+  return async (dispatch) => {
+    dispatch(clearU())
+  }
+}
+
+export const { setU, clearU } = userSlice.actions
+
 export default userSlice.reducer
