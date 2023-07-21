@@ -8,7 +8,6 @@ import { useState } from 'react'
 
 const Blog = ({ blog, onRemove, currentUser }) => {
   const [isActive, setIsActive] = useState(false)
-  // const [likes, setLikes] = useState(blog.likes)
   const dispatch = useDispatch()
   const blogStyle = {
     paddingTop: 10,
