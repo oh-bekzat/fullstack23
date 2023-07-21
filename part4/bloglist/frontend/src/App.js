@@ -1,50 +1,30 @@
-import { useState, useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Blog from './components/Blog'
-import Notification from './components/Notification'
-import BlogForm from './components/BlogForm'
-import LoginForm from './components/LoginForm'
-import Togglable from './components/Togglable'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Users from './components/Users'
+import Blogs from './components/Blogs'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import {
-  createNotification,
-  wrongInitialsNotification,
-} from './reducers/notificationReducer'
-import { initializeBlogs, createBlog, removeBlog } from './reducers/blogReducer'
+import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
+import { useState, useEffect } from 'react'
+import { wrongInitialsNotification } from './reducers/notificationReducer'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser, clearUser } from './reducers/userReducer'
 
 const App = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // const [user, setUser] = useState(null)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       dispatch(setUser(user))
-      // setUser(user)
       blogService.setToken(user.token)
     }
   }, [])
 
-  useEffect(() => {
-    dispatch(initializeBlogs())
-  }, [dispatch])
-
   const user = useSelector((state) => state.user)
-  const blogs = useSelector((state) => state.blogs)
-  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
-  const blogFormRef = useRef()
-
-  const addBlog = (blogObject) => {
-    blogFormRef.current.toggleVisibility()
-    blogObject.user = { id: user.id, name: user.name, username: user.username }
-    dispatch(createBlog(blogObject))
-    dispatch(createNotification(blogObject))
-  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -63,11 +43,6 @@ const App = () => {
       dispatch(wrongInitialsNotification())
     }
   }
-
-  const deleteBlog = (blogId) => {
-    dispatch(removeBlog(blogId))
-  }
-
   return (
     <div>
       {!user && (
@@ -93,20 +68,14 @@ const App = () => {
           >
             Log out
           </button>
-          <Togglable buttonLabel="New blog" ref={blogFormRef}>
-            <BlogForm createBlog={addBlog} />
-          </Togglable>
-          <br />
-          {sortedBlogs.map((blog) => (
-            <Blog
-              key={blog._id}
-              blog={blog}
-              onRemove={deleteBlog}
-              currentUser={user}
-            />
-          ))}
         </div>
       )}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Blogs />} />
+          <Route path="/users" element={<Users />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
