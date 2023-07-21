@@ -5,6 +5,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import User from './components/User'
 import { useState, useEffect } from 'react'
 import { wrongInitialsNotification } from './reducers/notificationReducer'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +15,7 @@ const App = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const users = useSelector((state) => state.users)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -43,9 +45,10 @@ const App = () => {
       dispatch(wrongInitialsNotification())
     }
   }
+
   return (
     <div>
-      {!user && (
+      {!user ? (
         <LoginForm
           handleLogin={handleLogin}
           username={username}
@@ -53,8 +56,7 @@ const App = () => {
           handleUsernameChange={({ target }) => setUsername(target.value)}
           handlePasswordChange={({ target }) => setPassword(target.value)}
         />
-      )}
-      {user && (
+      ) : (
         <div>
           <h2>Blogs</h2>
           <Notification />
@@ -68,14 +70,15 @@ const App = () => {
           >
             Log out
           </button>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Blogs />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/:id" element={<User users={users} />} />
+            </Routes>
+          </Router>
         </div>
       )}
-      <Router>
-        <Routes>
-          <Route path="/" element={<Blogs />} />
-          <Route path="/users" element={<Users />} />
-        </Routes>
-      </Router>
     </div>
   )
 }
