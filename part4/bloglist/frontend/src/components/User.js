@@ -6,7 +6,7 @@ const User = () => {
   const id = useParams().id
   const user = users.find((u) => u.id === id)
   if (!user) {
-    return <div>Loading user...</div>
+    return null
   }
   return (
     <div>

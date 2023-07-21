@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Users from './components/Users'
 import Blogs from './components/Blogs'
+import BlogViews from './components/BlogViews'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
@@ -15,7 +16,6 @@ const App = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const users = useSelector((state) => state.users)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -74,7 +74,8 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Blogs />} />
               <Route path="/users" element={<Users />} />
-              <Route path="/users/:id" element={<User users={users} />} />
+              <Route path="/users/:id" element={<User />} />
+              <Route path="/blogs/:id" element={<BlogViews />} />
             </Routes>
           </Router>
         </div>

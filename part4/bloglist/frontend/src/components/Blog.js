@@ -5,6 +5,7 @@ import {
 } from '../reducers/notificationReducer'
 import { likeBlog } from '../reducers/blogReducer'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Blog = ({ blog, onRemove, currentUser }) => {
   const [isActive, setIsActive] = useState(false)
@@ -31,7 +32,7 @@ const Blog = ({ blog, onRemove, currentUser }) => {
 
   return (
     <div className="blog" style={blogStyle}>
-      <div>{blog.title}</div>
+      <Link to={`/blogs/${blog._id}`}>{blog.title}</Link>
       <div>{blog.author}</div>
       {isActive ? (
         <div className="blog">
