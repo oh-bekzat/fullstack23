@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Users from './components/Users'
 import Blogs from './components/Blogs'
 import BlogViews from './components/BlogViews'
@@ -46,6 +46,22 @@ const App = () => {
     }
   }
 
+  const navbar = {
+    padding: 10,
+    backgroundColor: 'grey',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: 18,
+  }
+
+  const nav = {
+    paddingLeft: 10,
+    textDecoration: 'none',
+    color: 'white',
+    verticalAlign: 'middle',
+    margin: 0,
+  }
+
   return (
     <div>
       {!user ? (
@@ -58,19 +74,29 @@ const App = () => {
         />
       ) : (
         <div>
-          <h2>Blogs</h2>
-          <Notification />
-          <p>{user.name} logged in</p>
-          <button
-            id="logout-button"
-            onClick={() => {
-              window.localStorage.removeItem('loggedBlogappUser')
-              dispatch(clearUser())
-            }}
-          >
-            Log out
-          </button>
           <Router>
+            <div style={navbar}>
+              <Link style={nav} to="/">
+                Blogs
+              </Link>
+              <Link style={nav} to="/users">
+                Users
+              </Link>
+              <div style={nav}>{user.name} logged in</div>
+              <div style={nav}>
+                <button
+                  id="logout-button"
+                  onClick={() => {
+                    window.localStorage.removeItem('loggedBlogappUser')
+                    dispatch(clearUser())
+                  }}
+                >
+                  Log out
+                </button>
+              </div>
+            </div>
+            <Notification />
+            <h2>Blog app</h2>
             <Routes>
               <Route path="/" element={<Blogs />} />
               <Route path="/users" element={<Users />} />

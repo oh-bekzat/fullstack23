@@ -18,6 +18,10 @@ const Blog = ({ blog, onRemove, currentUser }) => {
     marginBottom: 5,
   }
 
+  const reconstructed = {
+    display: 'none',
+  }
+
   const like = async () => {
     dispatch(likeBlog(blog))
     dispatch(likeNotification(blog))
@@ -33,35 +37,37 @@ const Blog = ({ blog, onRemove, currentUser }) => {
   return (
     <div className="blog" style={blogStyle}>
       <Link to={`/blogs/${blog._id}`}>{blog.title}</Link>
-      <div>{blog.author}</div>
-      {isActive ? (
-        <div className="blog">
-          <div>{blog.url}</div>
-          <div>Likes: {blog.likes}</div>
-          <button id="like-button" onClick={like}>
-            Like
-          </button>
-          <div>{blog.user.name}</div>
-          {currentUser && blog.user && blog.user.id === currentUser.id && (
-            <button id="remove-button" onClick={remove}>
-              Remove
+      <div style={reconstructed}>
+        <div>{blog.author}</div>
+        {isActive ? (
+          <div className="blog">
+            <div>{blog.url}</div>
+            <div>Likes: {blog.likes}</div>
+            <button id="like-button" onClick={like}>
+              Like
             </button>
-          )}
+            <div>{blog.user.name}</div>
+            {currentUser && blog.user && blog.user.id === currentUser.id && (
+              <button id="remove-button" onClick={remove}>
+                Remove
+              </button>
+            )}
+            <button
+              id="hide-button"
+              onClick={() => setIsActive((prevState) => !prevState)}
+            >
+              Hide
+            </button>
+          </div>
+        ) : (
           <button
-            id="hide-button"
+            id="show-button"
             onClick={() => setIsActive((prevState) => !prevState)}
           >
-            Hide
+            Show
           </button>
-        </div>
-      ) : (
-        <button
-          id="show-button"
-          onClick={() => setIsActive((prevState) => !prevState)}
-        >
-          Show
-        </button>
-      )}
+        )}
+      </div>
     </div>
   )
 }
