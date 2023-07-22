@@ -10,15 +10,29 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
 		author: body.author !== undefined ? body.author : res.status(404).end(),
 		url: body.url,
 		likes: body.likes !== undefined ? body.likes : 0,
-		user: user.id
+		user: user.id,
+		comments: [],
 	})
   
 	const savedBlog = await blog.save()
   
-	user.blogs = user.blogs.concat(savedBlog.id) // Ensure that user.blogs is initialized as an array
+	user.blogs = user.blogs.concat(savedBlog.id)
 	await user.save()
   
 	res.status(201).json(savedBlog)
+})
+
+blogsRouter.post('/:id/comments/', async (req, res) => {
+	const blogId = req.params.id
+	const { comment } = req.body
+	try {
+		const blog = await Blog.findById(blogId)
+		blog.comments.push(comment)
+		await blog.save()
+		res.status(200).json(blog)
+	} catch (error) {
+		res.status(500).json({ error: 'Something went wrong' })
+	}
 })
 
 blogsRouter.delete('/:id', middleware.userExtractor, async (req, res) => {

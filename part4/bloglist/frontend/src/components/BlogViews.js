@@ -12,7 +12,7 @@ const User = () => {
     dispatch(likeBlog(blog))
     dispatch(likeNotification(blog))
   }
-
+  console.log(blog)
   if (!blog) {
     return null
   }
@@ -25,6 +25,12 @@ const User = () => {
       <button onClick={like}>Like</button>
       <br />
       added by {blog.author}
+      <h3>Comments</h3>
+      <ul>
+        {blog.comments.map((comment, index) => (
+          <li key={index}>{comment}</li>
+        ))}
+      </ul>
     </div>
   )
 }
