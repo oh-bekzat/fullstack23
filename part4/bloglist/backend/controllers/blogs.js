@@ -22,16 +22,29 @@ blogsRouter.post('/', middleware.userExtractor, async (req, res) => {
 	res.status(201).json(savedBlog)
 })
 
-blogsRouter.post('/:id/comments/', async (req, res) => {
+blogsRouter.get('/:id/comments', async (req, res) => {
 	const blogId = req.params.id
-	const { comment } = req.body
+	try {
+		const blog = await Blog.findById(blogId)
+		if (!blog) {
+			return res.status(404).json({ error: 'Blog not found' })
+		}
+		res.json(blog.comments)
+	} catch (error) {
+		res.status(500).json({ error: 'Something went wrong' })
+	}
+})
+
+blogsRouter.post('/:id/comments', async (req, res) => {
+	const blogId = req.params.id
+	const {comment} = req.body
 	try {
 		const blog = await Blog.findById(blogId)
 		blog.comments.push(comment)
 		await blog.save()
-		res.status(200).json(blog)
+		res.status(200).json(comment)
 	} catch (error) {
-		res.status(500).json({ error: 'Something went wrong' })
+		res.status(500).json(error)
 	}
 })
 

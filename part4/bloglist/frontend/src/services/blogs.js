@@ -9,18 +9,29 @@ const setToken = (newToken) => {
 }
 
 const getAll = async () => {
-  const request = axios.get(baseUrl)
-  const response = await request
-  return response.data
+  const req = axios.get(baseUrl)
+  const res = await req
+  return res.data
+}
+
+const getComments = async (id) => {
+  const req = axios.get(`${baseUrl}/${id}/comments`)
+  const res = await req
+  return res.data
 }
 
 const create = async (newBlog) => {
   const config = {
     headers: { Authorization: token },
   }
-  const response = await axios.post(baseUrl, newBlog, config)
-  console.log(response.data)
-  return response.data
+  const res = await axios.post(baseUrl, newBlog, config)
+  return res.data
+}
+
+const comment = async (newComment, id) => {
+  const res = await axios.post(`${baseUrl}/${id}/comments`, newComment)
+  console.log(res.data)
+  return res.data
 }
 
 const put = async (blog) => {
@@ -28,8 +39,8 @@ const put = async (blog) => {
     headers: { Authorization: token },
   }
   const url = `${baseUrl}/${blog._id}`
-  const response = await axios.put(url, blog, config)
-  return response.data
+  const res = await axios.put(url, blog, config)
+  return res.data
 }
 
 const dispose = async (id) => {
@@ -40,4 +51,4 @@ const dispose = async (id) => {
   await axios.delete(url, config)
 }
 
-export default { getAll, create, put, dispose, setToken }
+export default { getAll, getComments, create, comment, put, dispose, setToken }
