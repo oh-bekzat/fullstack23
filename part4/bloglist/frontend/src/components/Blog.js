@@ -10,13 +10,6 @@ import { Link } from 'react-router-dom'
 const Blog = ({ blog, onRemove, currentUser }) => {
   const [isActive, setIsActive] = useState(false)
   const dispatch = useDispatch()
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  }
 
   const reconstructed = {
     display: 'none',
@@ -35,8 +28,10 @@ const Blog = ({ blog, onRemove, currentUser }) => {
   }
 
   return (
-    <div className="blog" style={blogStyle}>
-      <Link to={`/blogs/${blog._id}`}>{blog.title}</Link>
+    <div className="blog">
+      <span className="inline-flex items-center rounded-md bg-pink-50 mx-5 my-1 px-4 py-2 text-m font-medium text-gray-800 ring-1 ring-inset ring-gray-500/10">
+        <Link to={`/blogs/${blog._id}`}>{blog.title}</Link>
+      </span>
       <div style={reconstructed}>
         <div>{blog.author}</div>
         {isActive ? (

@@ -4,8 +4,13 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@reduxjs/toolkit": "^1.9.5",
+    "@tailwindcss/forms": "^0.5.4",
+    "autoprefixer": "^10.4.14",
     "axios": "^1.4.0",
+    "postcss": "^8.4.27",
+    "postcss-cli": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
@@ -64,7 +69,8 @@
     "eslint-plugin-react": "^7.32.2",
     "jest": "^24.1.0",
     "json-server": "^0.17.1",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.0",
+    "tailwindcss": "^3.3.3"
   },
   "jest": {
     "transform": {

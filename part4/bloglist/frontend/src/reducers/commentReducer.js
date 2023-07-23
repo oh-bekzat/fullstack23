@@ -19,7 +19,6 @@ export const { appendComment, setComments } = commentSlice.actions
 export const initializeComments = (blogId) => {
   return async (dispatch) => {
     const comments = await blogsService.getComments(blogId)
-    console.log(comments)
     dispatch(setComments(comments))
   }
 }
