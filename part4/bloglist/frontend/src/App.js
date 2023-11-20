@@ -45,9 +45,10 @@ const App = () => {
       dispatch(wrongInitialsNotification())
     }
   }
+  console.log(user)
 
   return (
-    <div>
+    <div className="font-garamond">
       {!user ? (
         <LoginForm
           handleLogin={handleLogin}
@@ -106,7 +107,7 @@ const App = () => {
               <div className="flex flex-1 justify-end"></div>
             </div>
             <Notification />
-            <h2 className="text-3xl font-bold">Blog app</h2>
+            <h2 className="text-3xl font-bold font-garamond">Blog app</h2>
             <Routes>
               <Route path="/" element={<Blogs />} />
               <Route path="/users" element={<Users />} />
